@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import toast from 'react-hot-toast';
 
 export default function Home() {
   const [requirement, setRequirement] = useState("");
@@ -17,7 +18,11 @@ export default function Home() {
   // Fetch the history from SQLite backend
   const fetchHistory = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/history");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/history`, {
+        headers: {
+          "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || "",
+        }
+      });
       if (!response.ok) throw new Error("Failed to fetch history");
       const data = await response.json();
       if (data.status === "success") {
@@ -34,31 +39,73 @@ export default function Home() {
   }, []);
 
   const generateTests = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("http://127.0.0.1:8000/generate-tests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          requirement_text: requirement,
-          complexity: "medium",
-        }),
-      });
+  setLoading(true);
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generate-tests`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || "", 
+      },
+      body: JSON.stringify({
+        requirement_text: requirement,
+        complexity: "medium",
+      }),
+    });
 
-      if (!response.ok) throw new Error("Backend connection failed");
-      
-      const data = await response.json();
+    if (!response.ok) {
+      throw new Error("Backend connection failed");
+    }
+    
+    const data = await response.json();
+    
+    // ✨ Check for fallback response
+    if (data.error_type === "invalid_requirement") {
       setTestCases(data.generated_test_cases);
       
-      // Auto-refresh the history list after a new generation!
-      fetchHistory(); 
+      // 🎨 Professional warning toast
+      toast.error(
+        "Please provide a clear software requirement",
+        {
+          duration: 5000,
+          icon: '⚠️',
+        }
+      );
       
-    } catch (error) {
-      console.error("Error:", error);
-      alert("⚠️ Cannot connect to backend. Is your Python server running?");
+      // Show a helpful hint toast after 1 second
+      setTimeout(() => {
+        toast(
+          "Example: 'A user should be able to login with Google'",
+          {
+            duration: 8000,
+            icon: '💡',
+          }
+        );
+      }, 1000);
+      
+    } else {
+      // ✅ Success!
+      setTestCases(data.generated_test_cases);
+      fetchHistory();
+      
+      // 🎉 Success toast
+      toast.success('Test cases generated successfully!');
     }
-    setLoading(false);
-  };
+    
+  } catch (error) {
+    console.error("Error:", error);
+    
+    // ❌ Error toast
+    toast.error(
+      'Cannot connect to backend. Please check your server.',
+      {
+        duration: 6000,
+        icon: '🔥',
+      }
+    );
+  }
+  setLoading(false);
+};
 
   // CSV Export
   const exportToCSV = () => {
@@ -140,7 +187,8 @@ export default function Home() {
             <h3 className="text-sm font-bold text-slate-400 mb-4 uppercase tracking-widest flex items-center gap-2">
               <span>📚</span> Recent Test Suites
             </h3>
-            <div className="space-y-3">
+            {/* ✨ ADDED max-h-64 overflow-y-auto pr-2 RIGHT HERE! ✨ */}
+            <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
               {history.map((item) => (
                 <div key={item.id} className="p-4 bg-slate-50/50 hover:bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center transition-colors">
                   <p className="text-sm text-slate-600 truncate w-3/4 font-medium">
