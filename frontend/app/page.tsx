@@ -136,8 +136,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen p-8 bg-[#FAFAFA] text-slate-900 font-sans selection:bg-indigo-100">
-      <div className="max-w-[90rem] mx-auto space-y-10">
+    <main className="min-h-screen p-8 bg-[#FAFAFA] text-slate-900 font-sans selection:bg-indigo-100 flex flex-col justify-between">
+      <div className="max-w-[90rem] mx-auto space-y-10 w-full">
         
         {/* Modern Header */}
         <div className="text-center pt-12">
@@ -154,16 +154,48 @@ export default function Home() {
 
         {/* Sleek Input Section */}
         <div className="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 max-w-4xl mx-auto transition-all">
+          
+          {/* ✨ NEW QUICK-TRY PILLS ✨ */}
+          <div className="flex flex-wrap items-center gap-2 mb-5">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2">Try an example:</span>
+            {["🛒 Shopping Cart Checkout", "🔒 2FA Login Flow", "💳 Refund Processing"].map((suggestion, i) => (
+              <button
+                key={i}
+                onClick={() => setRequirement(`Verify the ${suggestion.substring(3).toLowerCase()} process.`)}
+                className="text-[11px] font-semibold bg-slate-50 border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-colors"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+
           <label className="block text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">
             Define your Requirement
           </label>
+          
           <textarea
             className="w-full p-5 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none resize-none transition-all text-slate-700 text-lg shadow-inner bg-slate-50/50 focus:bg-white"
             rows={3}
+            maxLength={500}
             placeholder="e.g., Verify that user can login successfully in the portal..."
             value={requirement}
             onChange={(e) => setRequirement(e.target.value)}
           />
+          
+          {/* ✨ UPDATED HELPER TEXT & COUNTER ✨ */}
+          <div className="mt-3 flex items-start justify-between gap-4 px-1">
+            <div className="flex items-start gap-2 text-slate-500">
+              <svg className="w-4 h-4 text-indigo-400 mt-[2px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <p className="text-xs font-medium leading-relaxed">
+                <span className="font-bold text-slate-600">Pro Tip:</span> For the best results, provide a clear software feature or user story. Conversational queries will not generate valid test cases.
+              </p>
+            </div>
+            {/* The Character Counter */}
+            <div className={`text-xs font-bold shrink-0 mt-[2px] ${requirement.length >= 500 ? 'text-rose-500' : 'text-slate-400'}`}>
+              {requirement.length} / 500
+            </div>
+          </div>
+
           <button
             onClick={generateTests}
             disabled={!requirement || loading}
@@ -187,7 +219,6 @@ export default function Home() {
             <h3 className="text-sm font-bold text-slate-400 mb-4 uppercase tracking-widest flex items-center gap-2">
               <span>📚</span> Recent Test Suites
             </h3>
-            {/* ✨ ADDED max-h-64 overflow-y-auto pr-2 RIGHT HERE! ✨ */}
             <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
               {history.map((item) => (
                 <div key={item.id} className="p-4 bg-slate-50/50 hover:bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center transition-colors">
@@ -211,7 +242,7 @@ export default function Home() {
 
         {/* 2026 Enterprise Table Output */}
         {testCases.length > 0 && (
-          <div className="animate-fade-in-up mt-12">
+          <div className="animate-fade-in-up mt-12 mb-10">
             <div className="flex justify-between items-center mb-6 px-2">
               <h2 className="text-xl font-bold text-slate-800 tracking-tight">Generated Suite</h2>
               <button 
@@ -288,6 +319,15 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {/* ✨ ENTERPRISE SAAS FOOTER ✨ */}
+      <footer className="mt-20 pb-8 border-t border-slate-200/60 pt-8 text-center w-full">
+        <p className="text-sm font-extrabold text-slate-400 uppercase tracking-widest mb-2">TestGenius AI</p>
+        <p className="text-xs text-slate-500 font-medium tracking-wide">
+          © 2026 TestGenius AI. All rights reserved. <br/> 
+          <span className="inline-block mt-1 opacity-75">Built for modern software engineering teams.</span>
+        </p>
+      </footer>
     </main>
   );
 }
