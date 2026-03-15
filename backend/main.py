@@ -132,7 +132,7 @@ VALID INPUT FORMAT (for proper requirements):
   ]
 }
 
-Generate at least 10 test cases for valid requirements: Positive, Negative, and Edge case.
+Generate 8 test cases for valid requirements: Positive, Negative, and Edge case and highly detailed and comprehensive. Do not more than 8 test cases. Always ensure the JSON is properly formatted and valid.
 """
 
 @app.get("/")
