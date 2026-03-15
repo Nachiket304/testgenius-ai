@@ -1,0 +1,35 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Purple to Indigo gradient (left side - input) -->
+    <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Teal to Cyan gradient (right side - output) -->
+    <linearGradient id="rightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14B8A6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Center accent gradient -->
+    <linearGradient id="centerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Left prism face (purple - specs input) -->
+  <path d="M 0,60 L 60,0 L 60,120 Z" fill="url(#leftGrad)" opacity="0.95"/>
+  
+  <!-- Center sharp edge (analysis point) -->
+  <path d="M 60,0 L 100,60 L 60,120 Z" fill="url(#centerGrad)"/>
+  
+  <!-- Right prism face (teal - test output) -->
+  <path d="M 100,60 L 160,0 L 160,120 Z" fill="url(#rightGrad)" opacity="0.95"/>
+  
+  <!-- Subtle edge highlights for depth -->
+  <line x1="60" y1="0" x2="60" y2="120" stroke="#fff" stroke-width="2" opacity="0.3"/>
+  <line x1="100" y1="60" x2="60" y2="0" stroke="#fff" stroke-width="1.5" opacity="0.2"/>
+  <line x1="100" y1="60" x2="60" y2="120" stroke="#fff" stroke-width="1.5" opacity="0.2"/>
+</svg>

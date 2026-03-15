@@ -258,17 +258,19 @@ export default function Home() {
             
             <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
+                {/* ✨ Added table-fixed and min-w-[1200px] to enforce strict column widths ✨ */}
+                <table className="w-full text-sm text-left table-fixed min-w-[1200px]">
                   <thead className="text-[11px] text-slate-400 uppercase tracking-widest bg-slate-50/80 border-b border-slate-100">
                     <tr>
-                      <th className="px-6 py-5 font-semibold">TC No</th>
-                      <th className="px-6 py-5 font-semibold">Test Summary</th>
-                      <th className="px-6 py-5 font-semibold">Test Description</th>
-                      <th className="px-6 py-5 font-semibold">Precondition</th>
-                      <th className="px-6 py-5 font-semibold text-center">Step</th>
-                      <th className="px-6 py-5 font-semibold">Action</th>
-                      <th className="px-6 py-5 font-semibold">Test Data</th>
-                      <th className="px-6 py-5 font-semibold">Expected Result</th>
+                      {/* Explicit percentage widths for perfect balance */}
+                      <th className="px-4 py-5 font-semibold w-[6%]">TC No</th>
+                      <th className="px-4 py-5 font-semibold w-[14%]">Test Summary</th>
+                      <th className="px-4 py-5 font-semibold w-[16%]">Test Description</th>
+                      <th className="px-4 py-5 font-semibold w-[14%]">Precondition</th>
+                      <th className="px-4 py-5 font-semibold text-center w-[6%]">Step</th>
+                      <th className="px-4 py-5 font-semibold w-[16%]">Action</th>
+                      <th className="px-4 py-5 font-semibold w-[14%]">Test Data</th>
+                      <th className="px-4 py-5 font-semibold w-[14%]">Expected Result</th>
                     </tr>
                   </thead>
                   <tbody className="text-slate-600">
@@ -300,9 +302,9 @@ export default function Home() {
                             {formatText(step.action)}
                           </td>
                           
-                          <td className="px-6 py-5 align-top">
-                            {step.test_data ? (
-                              <div className="inline-flex items-center px-3 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 font-mono text-xs whitespace-nowrap shadow-sm">
+                          <td className="px-4 py-5 align-top">
+                            {step.test_data && step.test_data !== "N/A" ? (
+                              <div className="block px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 font-mono text-xs break-words whitespace-normal shadow-sm">
                                 {step.test_data}
                               </div>
                             ) : null}
@@ -324,8 +326,16 @@ export default function Home() {
 
       {/* ✨ ENTERPRISE SAAS FOOTER ✨ */}
       <footer className="mt-20 pb-8 border-t border-slate-200/60 pt-8 text-center w-full">
-        <p className="text-sm font-extrabold text-slate-400 uppercase tracking-widest mb-2">Speclyze</p>
-        <p className="text-xs text-slate-500 font-medium tracking-wide">
+        <div className="flex justify-center items-center gap-2 mb-3">
+          {/* Small Speclyze Icon */}
+          <svg className="w-6 h-5" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0,60 L 60,0 L 60,120 Z" fill="#7C3AED" opacity="0.95"/>
+            <path d="M 60,0 L 100,60 L 60,120 Z" fill="#6366F1"/>
+            <path d="M 100,60 L 160,0 L 160,120 Z" fill="#14B8A6" opacity="0.95"/>
+          </svg>
+          <p className="text-sm font-extrabold text-slate-500 uppercase tracking-widest mt-1">Speclyze</p>
+        </div>
+        <p className="text-xs text-slate-400 font-medium tracking-wide">
           © 2026 Speclyze. All rights reserved. <br/> 
           <span className="inline-block mt-1 opacity-75">Built for modern software engineering teams.</span>
         </p>
